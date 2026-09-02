@@ -89,9 +89,11 @@ That writes `articles/hackernoon/feed.xml` plus one HTML file per story, with th
 2. Open [app.hackernoon.com/new](https://app.hackernoon.com/new).
 3. **Import Story → RSS Feed** and paste:
 
-   `https://raw.githubusercontent.com/razveal-svg/btq-article-maker/main/articles/hackernoon/feed.xml`
+   `https://cdn.jsdelivr.net/gh/razveal-svg/btq-article-maker@main/articles/hackernoon/feed.xml`
 
+   GitHub raw serves `text/plain`; the importer rejects it. jsDelivr serves `application/xml`.
 4. Pick the stories, save, then **Submit Story for Review**.
+5. Mark them **In HN review** on [`articles/hackernoon/TRACKER.md`](articles/hackernoon/TRACKER.md). When a story is live, paste the URL and mark **Posted**. The tracker does not poll Hacker Noon.
 
 To preview locally: `node scripts/hackernoon_push.mjs --serve`. Hacker Noon cannot fetch `localhost`. If you have [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) installed, `--serve --tunnel --open` exposes the pack for one import session and opens the import page. Featured images only import if they are public URLs (commit them under `articles/assets/` or host them first).
 
@@ -124,6 +126,7 @@ Full pattern list with before/after examples: see `SKILL.md`.
 | `AGENTS.md` | Notes for AI agents maintaining this repo |
 | `articles/` | Humanized drafts for Hacker Noon (markdown source) |
 | `articles/hackernoon/` | Generated RSS + HTML import pack (`scripts/hackernoon_push.mjs`) |
+| `articles/hackernoon/TRACKER.md` | Posted / in review / suggested board (does not poll Hacker Noon) |
 | `references/wikipedia-signs-of-ai-writing.md` | Dated CC BY-SA snapshot of Wikipedia:Signs of AI writing (not MIT) |
 | `scripts/validate-package.py` | Package consistency checks |
 | `.env.example` | Gemini key placeholder (`GEMINI_API_KEY`) |
