@@ -1,38 +1,29 @@
 # Hacker Noon tracker
 
-Status is local. Hacker Noon is not polled. After an RSS import, mark the
-story **In HN review**. When editors publish it, paste the live URL and mark
-**Posted**.
+Last public-feed check: 2026-09-02T16:25:14.884Z.
 
-Working board in Cursor: `hackernoon-article-tracker` canvas.
+In-review status is not public. A GitHub Action polls Hacker Noon's public RSS
+hourly and marks a story **Posted** when the title appears. Rejection still
+arrives by email from Hacker Noon.
 
-Import feed (use this URL, not GitHub raw):
-
-https://cdn.jsdelivr.net/gh/razveal-svg/btq-article-maker@main/articles/hackernoon/feed.xml
-
-Rebuild the pack with `node scripts/hackernoon_push.mjs`.
+Import feed: https://cdn.jsdelivr.net/gh/razveal-svg/btq-article-maker@main/articles/hackernoon/feed.xml
 
 ## In HN review (2)
 
-Submitted 2 Sep 2026 via the jsDelivr RSS feed. Staff review is usually
-within 3 business days.
-
 | Article | Next step |
 | --- | --- |
-| Dilithium Didn't Fit in a PSBT. Two Testnet Spends Prove It Does Now | Wait for editors. When live, paste the URL and mark Posted. |
-| BTQ Shipped v0.4.4-testnet. Dilithium Fits in a PSBT | Wait for editors. If they reject overlap with the PSBT piece, reshape and resubmit. |
+| Dilithium Didn't Fit in a PSBT. Two Testnet Spends Prove It Does Now | Wait for Hacker Noon editors. When it is live, paste the URL and mark Posted. |
+| BTQ Shipped v0.4.4-testnet. Dilithium Fits in a PSBT | Wait for Hacker Noon editors. If they reject overlap with the PSBT piece, reshape and resubmit. |
 
-Drafts: `articles/hackernoon-psbt-dilithium.md`, `articles/hackernoon-v0.4.4-testnet.md`.
-
-## Posted
+## Posted (0)
 
 None yet.
 
-## Needs review
+## Needs review (0)
 
-None. Local sign-off happened before the RSS import.
+None.
 
-## Suggested
+## Suggested (10)
 
 | Article | Topic | Next step |
 | --- | --- | --- |

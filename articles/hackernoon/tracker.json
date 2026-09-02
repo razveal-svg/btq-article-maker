@@ -1,0 +1,110 @@
+{
+  "checkedAt": "2026-09-02T16:25:14.884Z",
+  "feeds": [
+    "https://hackernoon.com/feed"
+  ],
+  "stories": [
+    {
+      "id": "psbt-dilithium",
+      "title": "Dilithium Didn't Fit in a PSBT. Two Testnet Spends Prove It Does Now",
+      "status": "submitted",
+      "topic": "Multisig & custody",
+      "nextStep": "Wait for Hacker Noon editors. When it is live, paste the URL and mark Posted.",
+      "draftPath": "articles/hackernoon-psbt-dilithium.md",
+      "submittedAt": "2026-09-02",
+      "postedAt": null,
+      "liveUrl": null,
+      "match": [
+        "dilithium",
+        "psbt"
+      ],
+      "notes": "Imported via the jsDelivr RSS feed on 2 Sep 2026."
+    },
+    {
+      "id": "v044-testnet",
+      "title": "BTQ Shipped v0.4.4-testnet. Dilithium Fits in a PSBT",
+      "status": "submitted",
+      "topic": "Build & ship",
+      "nextStep": "Wait for Hacker Noon editors. If they reject overlap with the PSBT piece, reshape and resubmit.",
+      "draftPath": "articles/hackernoon-v0.4.4-testnet.md",
+      "submittedAt": "2026-09-02",
+      "postedAt": null,
+      "liveUrl": null,
+      "match": [
+        "0.4.4",
+        "psbt"
+      ],
+      "notes": "Imported with the PSBT piece via RSS on 2 Sep 2026."
+    },
+    {
+      "id": "p2mr-output",
+      "title": "P2MR, or how to keep a public key out of the output",
+      "status": "suggested",
+      "topic": "Protocol",
+      "nextStep": "Write in Article Maker, then humanize."
+    },
+    {
+      "id": "dilithium-witness",
+      "title": "Reading a Dilithium witness stack, field by field",
+      "status": "suggested",
+      "topic": "Explorer",
+      "nextStep": "Pick a real testnet spend, then draft."
+    },
+    {
+      "id": "regtest-2of3",
+      "title": "Walking through a 2-of-3 Dilithium spend on regtest",
+      "status": "suggested",
+      "topic": "Multisig",
+      "nextStep": "Run the flow on regtest, then draft."
+    },
+    {
+      "id": "qr-wrong-transport",
+      "title": "Why QR codes are the wrong transport for a Dilithium PSBT",
+      "status": "suggested",
+      "topic": "Multisig",
+      "nextStep": "Short explainer after the PSBT article is live."
+    },
+    {
+      "id": "large-witness-fees",
+      "title": "How fees behave when your witness is large",
+      "status": "suggested",
+      "topic": "Protocol",
+      "nextStep": "Needs byte counts from an engineer."
+    },
+    {
+      "id": "bip360-alignment",
+      "title": "Where BTQ aligns with BIP 360, and where it goes further",
+      "status": "suggested",
+      "topic": "Protocol",
+      "nextStep": "Engineer review of consensus scope first."
+    },
+    {
+      "id": "htlc-two-chains",
+      "title": "Hash time locked contracts, explained with two chains",
+      "status": "suggested",
+      "topic": "HTLC",
+      "nextStep": "Draft once a real swap path exists."
+    },
+    {
+      "id": "decode-raw-tx",
+      "title": "How to decode a raw Bitcoin Quantum transaction yourself",
+      "status": "suggested",
+      "topic": "Explorer",
+      "nextStep": "Use one explorer tx as the worked example."
+    },
+    {
+      "id": "no-watch-only-xpub",
+      "title": "Why there is no watch-only xpub for Dilithium accounts",
+      "status": "suggested",
+      "topic": "Wallet",
+      "nextStep": "Confirm hardened-only HD derivation, then draft."
+    },
+    {
+      "id": "reproducible-builds",
+      "title": "Reproducible builds, and why you should not trust our binaries",
+      "status": "suggested",
+      "topic": "Node",
+      "nextStep": "Draft from the verify-release docs."
+    }
+  ]
+}

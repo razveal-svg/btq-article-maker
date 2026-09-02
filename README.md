@@ -93,7 +93,7 @@ That writes `articles/hackernoon/feed.xml` plus one HTML file per story, with th
 
    GitHub raw serves `text/plain`; the importer rejects it. jsDelivr serves `application/xml`.
 4. Pick the stories, save, then **Submit Story for Review**.
-5. Mark them **In HN review** on [`articles/hackernoon/TRACKER.md`](articles/hackernoon/TRACKER.md). When a story is live, paste the URL and mark **Posted**. The tracker does not poll Hacker Noon.
+5. Mark them **In HN review** on [`articles/hackernoon/TRACKER.md`](articles/hackernoon/TRACKER.md). A GitHub Action polls Hacker Noon’s public RSS every hour and marks a story **Posted** when it goes live (in-review and rejected are not public; those still arrive by email). You can also run `node scripts/hackernoon_watch.mjs` locally. Optional repo variable `HACKERNOON_HANDLE` adds your author feed.
 
 To preview locally: `node scripts/hackernoon_push.mjs --serve`. Hacker Noon cannot fetch `localhost`. If you have [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) installed, `--serve --tunnel --open` exposes the pack for one import session and opens the import page. Featured images only import if they are public URLs (commit them under `articles/assets/` or host them first).
 
@@ -132,7 +132,7 @@ Full pattern list with before/after examples: see `SKILL.md`.
 | `.env.example` | Gemini key placeholder (`GEMINI_API_KEY`) |
 | `scripts/gemini.py` | Native Gemini generateContent client |
 | `scripts/humanize.py` | File-mode humanize via Gemini + `SKILL.md` |
-| `scripts/hackernoon_push.mjs` | Build the Hacker Noon RSS/HTML import pack |
+| `scripts/hackernoon_watch.mjs` | Hourly public RSS poll; marks stories Posted when they go live |
 | `.claude-plugin/` | Optional upstream Claude Code packaging (not required for Cursor) |
 
 ## Maintaining the skill

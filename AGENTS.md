@@ -13,6 +13,7 @@ BTQ Article Maker — a Cursor-adapted fork of [blader/humanizer](https://github
 - `README.md` — human docs: Cursor installation, usage, pattern table, version history.
 - `articles/` — humanized article drafts (Hacker Noon, etc.).
 - `scripts/hackernoon_push.mjs` — builds the RSS/HTML pack Hacker Noon’s importer accepts. There is no Hacker Noon publish API; do not scrape their CMS.
+- `scripts/hackernoon_watch.mjs` — polls the public Hacker Noon RSS feed and marks submitted stories Posted when they appear. In-review/rejected are not public.
 - `references/wikipedia-signs-of-ai-writing.md` — CC BY-SA snapshot of Wikipedia:Signs of AI writing. Not MIT-licensed.
 - `.claude-plugin/` — optional upstream Claude Code plugin manifests (not required for Cursor).
 - `scripts/validate-package.py` — dependency-free package checks.

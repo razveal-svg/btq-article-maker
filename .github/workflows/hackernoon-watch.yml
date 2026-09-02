@@ -1,0 +1,43 @@
+name: Watch Hacker Noon
+
+on:
+  schedule:
+    - cron: "20 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Poll public Hacker Noon RSS
+        id: watch
+        env:
+          HACKERNOON_HANDLE: ${{ vars.HACKERNOON_HANDLE }}
+        run: |
+          node scripts/hackernoon_watch.mjs | tee watch.out
+          if grep -q '^Posted:' watch.out; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Commit tracker if it changed
+        run: |
+          git add articles/hackernoon/tracker.json articles/hackernoon/TRACKER.md
+          git diff --cached --quiet && echo "No tracker changes" && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Mark Hacker Noon stories live from the public RSS feed."
+          git push
+      - name: Open an issue for newly live stories
+        if: steps.watch.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body="$(awk '/^Posted:/{title=$0; getline; url=$0; printf "%s\n%s\n\n", title, url}' watch.out)"
+          gh issue create --title "Hacker Noon published a BTQ story" --body "$body" || true
