@@ -11,8 +11,13 @@ BTQ Article Maker — a Cursor-adapted fork of [blader/humanizer](https://github
 - `SKILL.md` — editable source of truth for the humanizer skill (33 numbered patterns with before/after examples).
 - `.cursor/skills/humanizer/SKILL.md` — Cursor runtime copy. **Keep in sync with root `SKILL.md`** after any skill edit.
 - `README.md` — human docs: Cursor installation, usage, pattern table, version history.
+- `articles/` — humanized article drafts (Hacker Noon, etc.).
+- `scripts/hackernoon_push.mjs` — builds the RSS/HTML pack Hacker Noon’s importer accepts. There is no Hacker Noon publish API; do not scrape their CMS.
+- `references/wikipedia-signs-of-ai-writing.md` — CC BY-SA snapshot of Wikipedia:Signs of AI writing. Not MIT-licensed.
 - `.claude-plugin/` — optional upstream Claude Code plugin manifests (not required for Cursor).
 - `scripts/validate-package.py` — dependency-free package checks.
+- `.env` — local Gemini key (`GEMINI_API_KEY`). **Never commit it.** Copy from `.env.example`.
+- `scripts/gemini.py` / `scripts/humanize.py` — optional Gemini backend for file-mode humanize. AQ. keys must use the native `generateContent` endpoint (`x-goog-api-key`), not OpenAI-compatible Bearer auth.
 
 ## Cursor workflow
 

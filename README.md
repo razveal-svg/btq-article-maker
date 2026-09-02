@@ -60,6 +60,41 @@ Copy-Item ".cursor\skills\humanizer\SKILL.md" "$env:USERPROFILE\.cursor\skills\h
 
 Restart Cursor or start a new Agent session after copying.
 
+**Optional: Gemini API** (batch humanize without using Cursor's model):
+
+1. Copy `.env.example` to `.env` and set `GEMINI_API_KEY` (AI Studio keys start with `AQ.`).
+2. Ping the key, then humanize a file:
+
+```powershell
+python scripts/gemini.py --ping
+python scripts/humanize.py articles\draft.md
+python scripts/humanize.py articles\draft.md -o articles\draft.humanized.md
+```
+
+`.env` is gitignored. Do not paste the key into `SKILL.md` or commit it.
+
+## Hacker Noon import
+
+Hacker Noon has no public API that can publish a story. Their editors still review every submission. What you can skip is the copy-paste into their editor: they already import from an RSS feed or a Direct URL.
+
+From this folder:
+
+```powershell
+node scripts/hackernoon_push.mjs
+```
+
+That writes `articles/hackernoon/feed.xml` plus one HTML file per story, with the full body in `content:encoded` (the importer ignores a description-only feed). Then:
+
+1. Commit and push `articles/hackernoon/`.
+2. Open [app.hackernoon.com/new](https://app.hackernoon.com/new).
+3. **Import Story → RSS Feed** and paste:
+
+   `https://raw.githubusercontent.com/razveal-svg/btq-article-maker/main/articles/hackernoon/feed.xml`
+
+4. Pick the stories, save, then **Submit Story for Review**.
+
+To preview locally: `node scripts/hackernoon_push.mjs --serve`. Hacker Noon cannot fetch `localhost`. If you have [cloudflared](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/) installed, `--serve --tunnel --open` exposes the pack for one import session and opens the import page. Featured images only import if they are public URLs (commit them under `articles/assets/` or host them first).
+
 ## What it catches
 
 The skill follows [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) and applies **33 patterns**, including:
@@ -87,7 +122,14 @@ Full pattern list with before/after examples: see `SKILL.md`.
 | `SKILL.md` | Editable skill source (patterns + process) |
 | `.cursor/skills/humanizer/SKILL.md` | Cursor runtime copy — keep in sync with root |
 | `AGENTS.md` | Notes for AI agents maintaining this repo |
+| `articles/` | Humanized drafts for Hacker Noon (markdown source) |
+| `articles/hackernoon/` | Generated RSS + HTML import pack (`scripts/hackernoon_push.mjs`) |
+| `references/wikipedia-signs-of-ai-writing.md` | Dated CC BY-SA snapshot of Wikipedia:Signs of AI writing (not MIT) |
 | `scripts/validate-package.py` | Package consistency checks |
+| `.env.example` | Gemini key placeholder (`GEMINI_API_KEY`) |
+| `scripts/gemini.py` | Native Gemini generateContent client |
+| `scripts/humanize.py` | File-mode humanize via Gemini + `SKILL.md` |
+| `scripts/hackernoon_push.mjs` | Build the Hacker Noon RSS/HTML import pack |
 | `.claude-plugin/` | Optional upstream Claude Code packaging (not required for Cursor) |
 
 ## Maintaining the skill
@@ -112,7 +154,50 @@ python scripts/validate-package.py
 
 Adapted from [blader/humanizer](https://github.com/blader/humanizer) (MIT). Pattern guidance is based on Wikipedia’s AI-writing cleanup work.
 
-**License:** MIT (see `LICENSE`).
+**License:** MIT (see `LICENSE`). The Wikipedia snapshot in `references/` is CC BY-SA 4.0 and is not MIT-licensed.
+
+## Pattern table (33)
+
+| # | Pattern |
+|---|---------|
+| 1 | Undue emphasis on significance, legacy, and broader trends |
+| 2 | Undue emphasis on notability and media coverage |
+| 3 | Superficial analyses with -ing endings |
+| 4 | Promotional and advertisement-like language |
+| 5 | Vague attributions and weasel words |
+| 6 | Outline-like "challenges and future prospects" sections |
+| 7 | Overused AI vocabulary words |
+| 8 | Avoidance of is/are (copula avoidance) |
+| 9 | Negative parallelisms and tailing negations |
+| 10 | Rule of three overuse |
+| 11 | Elegant variation (synonym cycling) |
+| 12 | False ranges |
+| 13 | Passive voice and subjectless fragments |
+| 14 | Em dashes and en dashes |
+| 15 | Overuse of boldface |
+| 16 | Inline-header vertical lists |
+| 17 | Title case in headings |
+| 18 | Emojis |
+| 19 | Curly quotation marks |
+| 20 | Collaborative communication artifacts |
+| 21 | Knowledge-cutoff disclaimers and speculative gap-filling |
+| 22 | Sycophantic/servile tone |
+| 23 | Filler phrases |
+| 24 | Excessive hedging |
+| 25 | Generic positive conclusions |
+| 26 | Hyphenated word pair overuse |
+| 27 | Persuasive authority tropes |
+| 28 | Signposting and announcements |
+| 29 | Fragmented headers |
+| 30 | Diff-anchored writing |
+| 31 | Manufactured punchlines and staccato drama |
+| 32 | Aphorism formulas |
+| 33 | Conversational rhetorical openers |
+
+## Version history
+
+- **2.9.3** — Added a local Wikipedia:Signs of AI writing snapshot (retrieved 17 August 2026) and a human-readable syntax preserve-list so article passes keep is/has, plain verbs, and specific detail instead of over-smoothing.
+- **2.9.2** — Prior packaged skill (33 patterns).
 
 ## Status / ownership
 

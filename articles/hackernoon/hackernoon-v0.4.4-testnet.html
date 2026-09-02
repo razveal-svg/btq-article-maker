@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BTQ Shipped v0.4.4-testnet. Dilithium Fits in a PSBT</title>
+  <meta name="description" content="Bitcoin Quantum (BTQ) shipped Core v0.4.4-testnet. The quantum-resistant Bitcoin fork can now pass Dilithium spends in a normal PSBT. Testnet only.">
+</head>
+<body>
+<article>
+<h1>BTQ Shipped v0.4.4-testnet. Dilithium Fits in a PSBT</h1>
+<p>BTQ is Bitcoin Quantum. It is a quantum-resistant version of Bitcoin: a Bitcoin Core fork that keeps the 21 million cap and SHA-256 proof of work, and puts NIST Dilithium (FIPS 204) on the spends. If you already know how a Bitcoin node feels, the idea is that this one still feels like that, except the signatures are built to hold up when quantum computers get good at breaking ECDSA.</p>
+<p>Ordinary Bitcoin custody already depends on passing a file between people so two of three can approve a payment without putting keys on the same laptop. That file is a PSBT. Until this release, Bitcoin Quantum's post-quantum signatures did not fit in it. You had to use a homemade JSON blob instead. The new testnet build is mostly about closing that gap.</p>
+<h2>What shipped</h2>
+<p>BTQ Core <a href="https://github.com/btq-ag/btq-core/releases/tag/v0.4.4-testnet">v0.4.4-testnet</a> was published 18 August 2026. There are two zips: <code>linux-x86_64.zip</code> (<code>btqd</code>, <code>btq-cli</code>, <code>btq-qt</code>) and <code>windows-x86_64.zip</code> (the <code>.exe</code> equivalents). Shut the node or wallet down, wait for a clean exit, then swap the binaries.</p>
+<p>A PSBT can now carry Dilithium P2MR leaf scripts, control blocks, and partial signatures, so a quantum-safe 2-of-3 spend does not need a shared <code>.btqms</code> file. That is pull request #163.</p>
+<p>This tag does not change consensus rules. Dilithium P2MR-only remains policy-ahead only on the live testnet. <code>nDilithiumP2MRHeight</code> is unscheduled. Mainnet is not launched. Bitcoin Quantum is still a testnet project.</p>
+<h2>If you are still on v0.4.2</h2>
+<p><code>v0.4.3-testnet</code> was tagged the same day. Binaries were not published. If you are upgrading from v0.4.2-testnet or earlier, these zips also contain that work. Read <a href="https://github.com/btq-ag/btq-core/blob/v0.4.4-testnet/doc/release-notes/release-notes-btq-0.4.3.md">the 0.4.3 notes</a> before you upgrade.</p>
+<p>The part that can fork you: 0.4.3 raises the LWMA averaging window from 45 blocks to 144 (#124, #143). That is a consensus change. Upgrade nodes together.</p>
+<p>On the live testnet, legacy Dilithium outputs are still consensus-valid. P2MR-only activation is height-settable now (#128). The default remains unscheduled.</p>
+<p>0.4.3 also backported a list of CVEs: CVE-2024-52911 (use-after-free in the script interpreter), CVE-2025-46597 (<code>-maxmempool</code> cap on 32-bit systems), CVE-2024-52919 (addrman entry id widened past 32 bits), CVE-2025-54604 and CVE-2025-54605 (rate-limit unconditional logging), and CVE-2025-46598 (detect witness stripping without re-running scripts). Peers are no longer punished for invalid transactions. Scripts are checked once (#149).</p>
+<p>I am not going to recap every wallet fix from that tag. The operator-facing ones: Dilithium message signing is domain-separated from transaction signing (#126); <code>verifymessagewithdilithium</code> exists, and <code>verifydilithiumsignature</code> had its argument order fixed (#84); the node stopped issuing dead Dilithium addresses (#125). Placeholder fixed seeds are gone, so a bootstrap failure is explicit (#134). <code>-blocksonly=1</code> starts under BTQ's mempool floor (#157).</p>
+<h2>Dilithium in the PSBT</h2>
+<p>Until this tag, a 2-of-3 Dilithium spend needed a shared <code>.btqms</code> file. In v0.4.4 the PSBT holds the P2MR leaf, the control block, and the partial signatures. Same file handoff Bitcoin treasuries already do, now with quantum-resistant signatures. That is the Bitcoin Quantum version of the handoff Bitcoin treasuries already do.</p>
+<p>Decode is fail-closed. When the file is read, the loader rejects a forged Dilithium signature, an uncommitted leaf, a Merkle-root mismatch, or a sighash that is not <code>SIGHASH_ALL</code>. A leaf with no control block is rejected. Merge unions control blocks, so an empty entry cannot throw away a real one (#169).</p>
+<p>Two new RPCs: <code>createdilithiummultisig</code> and <code>getdilithiumpubkey</code>. There is a wrapper at <code>contrib/btq/dilithium-psbt.sh</code>.</p>
+<h2>What else is in the zip</h2>
+<p>Documentation: a live-chain proof one-pager for Dilithium PSBT (#160), PSBT Appendix A size units corrected to KB (#159), and the stale Bitcoin-inherited release notes with unowned download links removed (#158). The unused DilithiumWalletManager is gone (#164).</p>
+<p>That is the 0.4.4 delta. The PSBT work is the reason to take the zip; the rest is cleanup.</p>
+<h2>What this is not</h2>
+<p>This is a testnet tag for Bitcoin Quantum, not a mainnet coin, and it does not turn on P2MR-only. Hardware wallet transport is not in these notes.</p>
+<p>If you want the binaries, they are on the <a href="https://github.com/btq-ag/btq-core/releases/tag/v0.4.4-testnet">v0.4.4-testnet release</a>. Bugs go to <a href="https://github.com/btq-ag/btq-core/issues">the issue tracker</a>. If you are jumping from v0.4.2, treat the LWMA window change as the thing that can split the network, and upgrade together.</p>
+<h2>Sources</h2>
+<ul><li><a href="https://github.com/btq-ag/btq-core/releases/tag/v0.4.4-testnet">BTQ Core v0.4.4-testnet</a> (2026-08-18)</li><li><a href="https://github.com/btq-ag/btq-core/blob/v0.4.4-testnet/doc/release-notes/release-notes-btq-0.4.4.md">release-notes-btq-0.4.4.md</a></li><li><a href="https://github.com/btq-ag/btq-core/blob/v0.4.4-testnet/doc/release-notes/release-notes-btq-0.4.3.md">release-notes-btq-0.4.3.md</a> (tagged the same day; binaries were not published)</li></ul>
+</article>
+</body>
+</html>
